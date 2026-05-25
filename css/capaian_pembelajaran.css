@@ -1,0 +1,402 @@
+/* RESET STANDAR */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 20%),
+                linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    min-height: 100vh;
+    padding: 30px;
+    display: grid;
+    place-items: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+}
+
+/* NOTIFIKASI XP MODEREN */
+.xp-alert {
+    background: linear-gradient(135deg, #d1fae5 0%, #10b981 100%);
+    color: #065f46;
+    padding: 15px 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    text-align: center;
+    border: 1px solid rgba(16,185,129,0.2);
+    box-shadow: 0 10px 25px rgba(16,185,129,0.1);
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* CP CARD CONTAINER */
+.cp-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+/* HEADER CP */
+.cp-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.header-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+    font-size: 1.8rem;
+    border-radius: 15px;
+    display: grid;
+    place-items: center;
+}
+
+.cp-header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1e293b;
+    letter-spacing: -0.02rem;
+}
+
+.cp-fase {
+    display: inline-block;
+    color: #2563eb;
+    background: #eff6ff;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-top: 5px;
+}
+
+/* CONTENT AREA */
+.content-text {
+    background: #f8fafc;
+    padding: 20px 25px;
+    border-radius: 12px;
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    margin-bottom: 25px;
+}
+
+.info-icon {
+    margin-top: 3px;
+    color: #2563eb;
+    font-size: 1.1rem;
+}
+
+.content-text p {
+    color: #475569;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    font-weight: 400;
+}
+
+.section-title {
+    font-size: 1.1rem;
+    color: #1e293b;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.05rem;
+}
+
+/* GRID KOMPETENSI (Ini yang bikin padat) */
+.grid-competence {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.comp-item {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 20px;
+    border-radius: 12px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.comp-item:hover {
+    border-color: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.03);
+}
+
+.comp-icon {
+    font-size: 1.4rem;
+}
+
+.comp-item p {
+    font-size: 0.9rem;
+    color: #334155;
+    line-height: 1.6;
+    flex: 1;
+}
+
+.comp-item p strong {
+    color: #0f172a;
+}
+
+/* FOOTER AREA */
+.cp-footer {
+    text-align: center;
+}
+
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #ffffff;
+    color: #334155;
+    text-decoration: none;
+    padding: 12px 25px;
+    border-radius: 999px;
+    border: 2px solid #e2e8f0;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.btn-back:hover {
+    color: #2563eb;
+    border-color: #93c5fd;
+    background: #eff6ff;
+    transform: translateY(-2px);
+}
+
+/* Responsive Media Queries untuk Capaian Pembelajaran */
+@media (max-width: 1024px) {
+    body {
+        padding: 25px;
+    }
+    
+    .container {
+        max-width: 850px;
+    }
+    
+    .cp-card {
+        padding: 32px;
+    }
+    
+    .cp-header {
+        gap: 15px;
+    }
+    
+    .header-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+    
+    .cp-header h1 {
+        font-size: 1.6rem;
+    }
+    
+    .grid-competence {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 16px;
+        min-height: auto;
+    }
+    
+    .container {
+        max-width: 100%;
+    }
+    
+    .xp-alert {
+        padding: 12px 16px;
+        margin-bottom: 18px;
+        font-size: 0.85rem;
+        gap: 8px;
+    }
+    
+    .cp-card {
+        padding: 20px 16px;
+        border-radius: 16px;
+    }
+    
+    .cp-header {
+        gap: 12px;
+        padding-bottom: 14px;
+        margin-bottom: 18px;
+    }
+    
+    .header-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 1.3rem;
+    }
+    
+    .cp-header h1 {
+        font-size: 1.3rem;
+    }
+    
+    .cp-fase {
+        font-size: 0.75rem;
+        padding: 3px 10px;
+    }
+    
+    .content-text {
+        padding: 14px 16px;
+        gap: 10px;
+        margin-bottom: 18px;
+    }
+    
+    .info-icon {
+        font-size: 0.95rem;
+    }
+    
+    .content-text p {
+        font-size: 0.85rem;
+        line-height: 1.6;
+    }
+    
+    .section-title {
+        font-size: 0.9rem;
+        margin-bottom: 12px;
+    }
+    
+    .grid-competence {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    
+    .comp-item {
+        padding: 14px;
+        gap: 10px;
+        border-radius: 10px;
+    }
+    
+    .comp-icon {
+        font-size: 1.1rem;
+    }
+    
+    .comp-item p {
+        font-size: 0.8rem;
+        line-height: 1.5;
+    }
+    
+    .btn-back {
+        padding: 10px 18px;
+        font-size: 0.9rem;
+        gap: 8px;
+    }
+}
+
+@media (max-width: 540px) {
+    body {
+        padding: 12px;
+    }
+    
+    .xp-alert {
+        padding: 10px 12px;
+        margin-bottom: 14px;
+        font-size: 0.8rem;
+    }
+    
+    .cp-card {
+        padding: 14px 12px;
+        border-radius: 14px;
+    }
+    
+    .cp-header {
+        gap: 10px;
+        padding-bottom: 10px;
+        margin-bottom: 12px;
+    }
+    
+    .header-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.1rem;
+    }
+    
+    .cp-header h1 {
+        font-size: 1.1rem;
+    }
+    
+    .cp-fase {
+        font-size: 0.7rem;
+        padding: 2px 8px;
+        margin-top: 2px;
+    }
+    
+    .content-text {
+        padding: 10px 12px;
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+    
+    .info-icon {
+        font-size: 0.85rem;
+        min-width: 16px;
+    }
+    
+    .content-text p {
+        font-size: 0.8rem;
+        line-height: 1.5;
+    }
+    
+    .section-title {
+        font-size: 0.8rem;
+        margin-bottom: 10px;
+    }
+    
+    .grid-competence {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+    
+    .comp-item {
+        padding: 10px 8px;
+        gap: 8px;
+        border-radius: 8px;
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .comp-icon {
+        font-size: 0.95rem;
+    }
+    
+    .comp-item p {
+        font-size: 0.75rem;
+        line-height: 1.4;
+    }
+    
+    .btn-back {
+        padding: 8px 14px;
+        font-size: 0.8rem;
+        gap: 6px;
+    }
+}

@@ -1,0 +1,568 @@
+/* ==========================================================================
+   RESET & ANIMATED BACKGROUND
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    /* Background dengan animasi gradasi bergerak pelan (Opsi A: Clean Pastel) */
+    background: linear-gradient(-45deg, #f8fafc, #e2e8f0, #cbd5e1, #f1f5f9);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: #1e293b;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Diubah ke center biar pas di tengah layar */
+    padding: 40px 20px;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* ==========================================================================
+   ENLARGED CARD (Glassmorphism Effect)
+   ========================================================================== */
+.profile-card {
+    /* Ukuran kartu diperbesar supaya tidak kosong */
+    width: 100%;
+    max-width: 850px; /* Sebelumnya mungkin sekitar 600px */
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    border-radius: 28px; /* Sudut lebih membulat (modern) */
+    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.1);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-cover {
+    height: 220px; /* Cover lebih tinggi */
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efek Partikel Cahaya di Cover */
+.profile-cover::after {
+    content: '';
+    position: absolute;
+    width: 150%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    top: 0;
+    left: -150%;
+    transform: skewX(-20deg);
+    animation: shine 5s infinite;
+}
+
+@keyframes shine {
+    0% { left: -150%; }
+    20% { left: 150%; }
+    100% { left: 150%; }
+}
+
+/* ==========================================================================
+   AVATAR (Dengan Animasi Pulsing / Berdenyut)
+   ========================================================================== */
+.profile-content {
+    padding: 0 40px 50px 40px; /* Padding lebih lega */
+    text-align: center;
+    position: relative;
+}
+
+.avatar-container {
+    width: 160px; /* Avatar diperbesar */
+    height: 160px;
+    margin: -80px auto 25px auto;
+    border-radius: 50%;
+    background: #ffffff;
+    padding: 8px;
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4);
+    animation: pulseAvatar 2.5s infinite;
+    position: relative;
+    cursor: pointer;
+}
+
+.avatar-overlay {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    color: #0f172a;
+    font-size: 18px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.avatar-overlay:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.14);
+}
+
+@keyframes pulseAvatar {
+    0% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.5); }
+    50% { transform: scale(1); box-shadow: 0 0 0 20px rgba(59, 130, 246, 0); }
+    100% { transform: scale(0.98); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+}
+
+.avatar-container img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #f8fafc;
+}
+
+/* ==========================================================================
+   NAMA & BADGE
+   ========================================================================== */
+.profile-content h1 {
+    font-size: 34px; /* Font nama dibesarkan */
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #0f172a;
+    margin-bottom: 8px;
+}
+
+.nisn-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #f1f5f9;
+    color: #475569;
+    padding: 10px 28px;
+    border-radius: 999px;
+    font-size: 15px; /* Font badge diperbesar */
+    font-weight: 600;
+    margin-top: 5px;
+    border: 1px solid #e2e8f0;
+}
+
+/* ==========================================================================
+   STATS GRID (Ukuran Elemen Diperbesar)
+   ========================================================================== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 25px; /* Jarak antar kotak dilebarkan */
+    margin: 45px 0 45px;
+}
+
+.stat-item {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 30px 20px; /* Kotak dibikin lebih gemuk */
+    border-radius: 24px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.03);
+}
+
+.stat-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(37, 99, 235, 0.1);
+    border-color: #cbd5e1;
+}
+
+.stat-item i {
+    font-size: 30px; /* Icon diperbesar */
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 65px;
+    height: 65px;
+    border-radius: 18px;
+    margin-bottom: 5px;
+}
+
+/* Warna-warni Icon Pastel */
+.stat-item:nth-child(1) i { background: #fef3c7; color: #d97706; } /* XP */
+.stat-item:nth-child(2) i { background: #dbeafe; color: #2563eb; } /* Grade */
+.stat-item:nth-child(3) i { background: #d1fae5; color: #059669; } /* Badge */
+
+.stat-number {
+    font-size: 32px; /* Angka diperbesar */
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: #64748b;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+/* ==========================================================================
+   BUTTONS (Diperlebar)
+   ========================================================================== */
+.button-group {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px; /* Jarak tombol */
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.upload-form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    max-width: 680px;
+    margin: 0 auto 24px;
+}
+
+.upload-form input[type="file"] {
+    display: none;
+}
+
+.upload-hint {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 18px;
+    padding: 16px 22px;
+    color: #475569;
+    font-weight: 600;
+    text-align: center;
+    max-width: 360px;
+}
+
+.upload-message {
+    max-width: 720px;
+    margin: 0 auto 18px;
+    padding: 14px 18px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.upload-message.error {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+}
+
+.upload-message.success {
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.btn {
+    padding: 18px 24px; /* Tombol lebih tebal */
+    border-radius: 20px;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+}
+
+.btn-main {
+    background: #3b82f6;
+    color: #ffffff;
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+}
+
+.btn-main:hover {
+    background: #2563eb;
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(59, 130, 246, 0.4);
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1024px) {
+    body {
+        padding: 30px 15px;
+    }
+    
+    .profile-card {
+        max-width: 750px;
+    }
+    
+    .profile-content {
+        padding: 0 30px 40px 30px;
+    }
+    
+    .avatar-container {
+        width: 140px;
+        height: 140px;
+        margin: -70px auto 20px auto;
+    }
+    
+    .profile-content h1 {
+        font-size: 28px;
+    }
+    
+    .stats-grid {
+        gap: 18px;
+        margin: 35px 0;
+    }
+    
+    .stat-item {
+        padding: 25px 18px;
+    }
+    
+    .stat-item i {
+        font-size: 25px;
+        width: 55px;
+        height: 55px;
+    }
+    
+    .stat-number {
+        font-size: 28px;
+    }
+    
+    .button-group {
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 20px 12px;
+        min-height: auto;
+    }
+    
+    .profile-card {
+        max-width: 100%;
+        border-radius: 20px;
+    }
+    
+    .profile-cover {
+        height: 150px;
+    }
+    
+    .profile-content {
+        padding: 0 20px 30px 20px;
+    }
+    
+    .avatar-container {
+        width: 110px;
+        height: 110px;
+        margin: -55px auto 15px auto;
+    }
+    
+    .avatar-overlay {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+    
+    .profile-content h1 {
+        font-size: 22px;
+        margin-bottom: 5px;
+    }
+    
+    .nisn-badge {
+        padding: 8px 16px;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+        margin: 25px 0;
+    }
+    
+    .stat-item {
+        padding: 18px 12px;
+        gap: 8px;
+    }
+    
+    .stat-item i {
+        font-size: 20px;
+        width: 48px;
+        height: 48px;
+        margin-bottom: 2px;
+    }
+    
+    .stat-number {
+        font-size: 22px;
+    }
+    
+    .stat-label {
+        font-size: 11px;
+    }
+    
+    .button-group {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        max-width: 100%;
+    }
+    
+    .upload-form {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .upload-hint {
+        padding: 12px 16px;
+        font-size: 0.85rem;
+    }
+    
+    .btn {
+        padding: 14px 18px;
+        font-size: 14px;
+        gap: 8px;
+        border-radius: 16px;
+    }
+    
+    .upload-message {
+        font-size: 13px;
+        padding: 12px 16px;
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 540px) {
+    body {
+        padding: 15px 10px;
+    }
+    
+    .profile-card {
+        border-radius: 16px;
+    }
+    
+    .profile-cover {
+        height: 120px;
+    }
+    
+    .profile-content {
+        padding: 0 15px 20px 15px;
+    }
+    
+    .avatar-container {
+        width: 90px;
+        height: 90px;
+        margin: -45px auto 12px auto;
+    }
+    
+    .avatar-overlay {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+        right: 6px;
+        bottom: 6px;
+    }
+    
+    .profile-content h1 {
+        font-size: 18px;
+        margin-bottom: 3px;
+    }
+    
+    .nisn-badge {
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin: 18px 0;
+    }
+    
+    .stat-item {
+        padding: 14px 10px;
+        border-radius: 16px;
+    }
+    
+    .stat-item i {
+        font-size: 18px;
+        width: 40px;
+        height: 40px;
+    }
+    
+    .stat-number {
+        font-size: 18px;
+    }
+    
+    .stat-label {
+        font-size: 10px;
+    }
+    
+    .button-group {
+        gap: 8px;
+    }
+    
+    .btn {
+        padding: 12px 16px;
+        font-size: 13px;
+        gap: 6px;
+    }
+    
+    .upload-hint {
+        padding: 10px 12px;
+        font-size: 0.8rem;
+        border-radius: 12px;
+    }
+    
+    .upload-message {
+        font-size: 12px;
+        padding: 10px 12px;
+    }
+}
+
+.btn-logout {
+    background-color: #ffffff;
+    color: #ef4444;
+    border: 2px solid #fee2e2;
+}
+
+.btn-logout:hover {
+    background-color: #fef2f2;
+    border-color: #fca5a5;
+    transform: translateY(-3px);
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.profile-footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #94a3b8;
+    border-top: 1px dashed rgba(226, 232, 240, 0.8);
+    letter-spacing: 0.05em;
+    width: 100%;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 768px) {
+    .stats-grid { grid-template-columns: 1fr; gap: 15px; }
+    .button-group { grid-template-columns: 1fr; }
+    .profile-card { margin-top: 20px; }
+}

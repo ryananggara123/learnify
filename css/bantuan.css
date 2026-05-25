@@ -1,0 +1,551 @@
+/* ==========================================================================
+   RESET & BASE STYLES
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #f1f5f9;
+    color: #334155;
+    padding: 40px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-size: 16px;
+}
+
+.container {
+    width: 100%;
+    max-width: 800px;
+}
+
+.card {
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+/* ==========================================================================
+   HEADER SECTION
+   ========================================================================== */
+.header-bantuan {
+    background: linear-gradient(135deg, #1e293b, #3b82f6);
+    color: #ffffff;
+    padding: 45px 30px;
+    text-align: center;
+}
+
+.header-bantuan h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+}
+
+.header-bantuan p {
+    color: #cbd5e1;
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   CONTENT & FAQ ITEMS
+   ========================================================================== */
+.content {
+    padding: 40px;
+}
+
+.kategori-section {
+    margin-bottom: 35px;
+}
+
+.kategori-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 8px;
+}
+
+.kategori-title i {
+    color: #3b82f6;
+}
+
+.faq-item {
+    margin-bottom: 15px;
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 14px;
+    border-left: 4px solid #cbd5e1;
+    transition: all 0.2s ease;
+}
+
+.faq-item:hover {
+    border-left-color: #3b82f6;
+    background: #f1f5f9;
+}
+
+.faq-item h3 {
+    font-size: 15px;
+    color: #1e293b;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.faq-item p {
+    font-size: 13.5px;
+    color: #475569;
+    line-height: 1.6;
+}
+
+.faq-para-spacing {
+    margin-top: 10px;
+}
+
+/* ==========================================================================
+   POIN / GRADE TABLE
+   ========================================================================== */
+.tabel-grade {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+.tabel-grade th, .tabel-grade td {
+    border: 1px solid #e2e8f0;
+    padding: 10px 12px;
+    text-align: left;
+}
+
+.tabel-grade th {
+    background-color: #eff6ff;
+    color: #1e293b;
+    font-weight: 600;
+}
+
+.tabel-grade tr:nth-child(even) {
+    background-color: #ffffff;
+}
+
+/* ==========================================================================
+   FOOTER & BUTTONS
+   ========================================================================== */
+.kontak-admin {
+    margin-top: 40px;
+    background: linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%);
+    border: 1px solid #bae6fd;
+    padding: 25px;
+    border-radius: 16px;
+    text-align: center;
+}
+
+.kontak-admin h4 {
+    color: #0369a1;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.kontak-admin p {
+    font-size: 13px;
+    color: #0c4a6e;
+    margin-bottom: 15px;
+}
+
+.btn-wa {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background-color: #25d366;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);
+    transition: all 0.2s;
+}
+
+.btn-wa:hover {
+    background-color: #128c7e;
+    transform: translateY(-2px);
+}
+
+.btn-back {
+    display: block;
+    background-color: #e2e8f0;
+    color: #475569;
+    padding: 14px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 600;
+    text-align: center;
+    margin: 0 40px 40px 40px;
+    transition: all 0.3s ease;
+}
+
+.btn-back:hover {
+    background-color: #cbd5e1;
+    color: #1e293b;
+}
+
+/* ==========================================================================
+   MOBILE RESPONSIVENESS
+   ========================================================================== */
+
+/* Tablet devices (769px to 900px) */
+@media (max-width: 900px) and (min-width: 601px) {
+    body {
+        padding: 25px 18px;
+    }
+
+    .container {
+        max-width: 100%;
+    }
+
+    .card {
+        border-radius: 20px;
+    }
+
+    .header-bantuan {
+        padding: 35px 22px;
+    }
+
+    .header-bantuan h1 {
+        font-size: 24px;
+        margin-bottom: 8px;
+    }
+
+    .header-bantuan p {
+        font-size: 13px;
+    }
+
+    .content {
+        padding: 28px;
+    }
+
+    .kategori-section {
+        margin-bottom: 28px;
+    }
+
+    .kategori-title {
+        font-size: 17px;
+        margin-bottom: 12px;
+    }
+
+    .faq-item {
+        margin-bottom: 12px;
+        padding: 16px;
+        border-radius: 12px;
+    }
+
+    .faq-item h3 {
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .faq-item p {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .tabel-grade {
+        font-size: 12px;
+    }
+
+    .tabel-grade th, .tabel-grade td {
+        padding: 9px 11px;
+    }
+
+    .kontak-admin {
+        margin-top: 32px;
+        padding: 22px;
+        margin-left: -28px;
+        margin-right: -28px;
+        border-radius: 12px;
+    }
+
+    .kontak-admin h4 {
+        font-size: 15px;
+    }
+
+    .kontak-admin p {
+        font-size: 12px;
+    }
+
+    .btn-wa {
+        padding: 10px 22px;
+        font-size: 13px;
+    }
+
+    .btn-back {
+        margin: 0 28px 28px 28px;
+        padding: 12px;
+        font-size: 14px;
+        border-radius: 10px;
+    }
+}
+
+/* Mobile phones (600px and below) */
+@media (max-width: 600px) {
+    body {
+        padding: 12px 8px;
+        min-height: auto;
+    }
+
+    .container {
+        width: 100%;
+    }
+
+    .card {
+        border-radius: 14px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .header-bantuan {
+        padding: 20px 12px;
+    }
+
+    .header-bantuan h1 {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .header-bantuan h1 i {
+        font-size: 18px;
+    }
+
+    .header-bantuan p {
+        font-size: 11px;
+        line-height: 1.4;
+        word-wrap: break-word;
+    }
+
+    .content {
+        padding: 12px;
+    }
+
+    .kategori-section {
+        margin-bottom: 16px;
+    }
+
+    .kategori-title {
+        font-size: 13px;
+        margin-bottom: 8px;
+        gap: 6px;
+        flex-wrap: wrap;
+        padding-bottom: 6px;
+    }
+
+    .kategori-title i {
+        font-size: 15px;
+        flex-shrink: 0;
+    }
+
+    .faq-item {
+        margin-bottom: 8px;
+        padding: 10px;
+        border-radius: 8px;
+        border-left-width: 3px;
+        background: #f8fafc;
+    }
+
+    .faq-item:hover {
+        background: #f1f5f9;
+    }
+
+    .faq-item h3 {
+        font-size: 12px;
+        margin-bottom: 6px;
+        word-wrap: break-word;
+        font-weight: 600;
+        color: #1e293b;
+    }
+
+    .faq-item p {
+        font-size: 11px;
+        line-height: 1.5;
+        color: #475569;
+    }
+
+    .faq-item p strong {
+        font-weight: 600;
+    }
+
+    .tabel-grade {
+        font-size: 10px;
+        margin-top: 8px;
+        width: 100%;
+        overflow-x: auto;
+        display: block;
+    }
+
+    .tabel-grade thead {
+        display: table-header-group;
+    }
+
+    .tabel-grade tbody {
+        display: table-row-group;
+    }
+
+    .tabel-grade tr {
+        display: table-row;
+        width: 100%;
+    }
+
+    .tabel-grade th, .tabel-grade td {
+        padding: 5px 6px;
+        word-break: break-word;
+        border: 1px solid #e2e8f0;
+        text-align: left;
+    }
+
+    .tabel-grade th {
+        background-color: #eff6ff;
+        font-weight: 600;
+        font-size: 9px;
+    }
+
+    .tabel-grade td {
+        font-size: 10px;
+    }
+
+    .tabel-grade tr:nth-child(even) {
+        background-color: #f8fafc;
+    }
+
+    .kontak-admin {
+        margin-top: 16px;
+        margin-left: -12px;
+        margin-right: -12px;
+        margin-bottom: 0;
+        padding: 12px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%);
+        border: 1px solid #bae6fd;
+    }
+
+    .kontak-admin h4 {
+        font-size: 12px;
+        margin-bottom: 4px;
+        font-weight: 600;
+        color: #0369a1;
+    }
+
+    .kontak-admin p {
+        font-size: 10px;
+        margin-bottom: 10px;
+        color: #0c4a6e;
+        line-height: 1.4;
+    }
+
+    .btn-wa {
+        padding: 9px 14px;
+        font-size: 11px;
+        gap: 5px;
+        width: 100%;
+        justify-content: center;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-wa i {
+        font-size: 13px;
+        flex-shrink: 0;
+    }
+
+    .btn-wa:active {
+        transform: scale(0.98);
+    }
+
+    .btn-back {
+        margin: 12px 0 12px 0;
+        padding: 10px;
+        font-size: 12px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+    }
+
+    .btn-back i {
+        font-size: 13px;
+        flex-shrink: 0;
+    }
+}
+
+/* Extra small screens (360px and below) */
+@media (max-width: 360px) {
+    body {
+        padding: 10px 6px;
+    }
+
+    .header-bantuan {
+        padding: 16px 10px;
+    }
+
+    .header-bantuan h1 {
+        font-size: 14px;
+        margin-bottom: 2px;
+    }
+
+    .header-bantuan p {
+        font-size: 10px;
+    }
+
+    .content {
+        padding: 10px;
+    }
+
+    .kategori-title {
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+
+    .faq-item {
+        padding: 8px;
+        margin-bottom: 6px;
+    }
+
+    .faq-item h3 {
+        font-size: 11px;
+    }
+
+    .faq-item p {
+        font-size: 10px;
+    }
+
+    .tabel-grade th {
+        font-size: 8px;
+    }
+
+    .tabel-grade td {
+        font-size: 9px;
+    }
+
+    .btn-wa {
+        padding: 8px 12px;
+        font-size: 10px;
+    }
+
+    .btn-back {
+        padding: 9px;
+        font-size: 11px;
+    }
+}
