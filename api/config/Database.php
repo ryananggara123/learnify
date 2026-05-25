@@ -1,20 +1,16 @@
 <?php
 class Database {
-    private $host;
-    private $db_name;
-    private $username;
-    private $password;
+    // Kita langsung kunci nilai aslinya di properti class agar aman dari cache getenv
+    private $host = "gateway01.ap-southeast-1.prod.alicloud.tidbcloud.com";
+    private $db_name = "learnify"; 
+    private $username = "25qhFyHYwoJyP7o.root";
+    private $password = "i9dMXmsOdQGUmhkh";
     private $port = "4000"; 
     public $conn;
 
     public function __construct() {
-        $this->host = getenv('DB_HOST') ? getenv('DB_HOST') : "gateway01.ap-southeast-1.prod.alicloud.tidbcloud.com";
-        
-        // Kita ganti nama KEY-nya agar tidak tabrakan dengan cache typo lama di Vercel
-        $this->db_name = getenv('DB_DATABASE_BARU') ? getenv('DB_DATABASE_BARU') : "learnify";
-        
-        $this->username = getenv('DB_USER') ? getenv('DB_USER') : "25qhFyHYwoJyP7o.root";
-        $this->password = getenv('DB_PASS') ? getenv('DB_PASS') : "i9dMXmsOdQGUmhkh";
+        // Kosongkan bagian ini! Jangan ada fungsi getenv() sama sekali
+        // Dengan begini, Vercel dipaksa menggunakan teks di atas
     }
 
     public function getConnection() {
