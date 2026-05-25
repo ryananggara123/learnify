@@ -8,7 +8,7 @@ if(isset($_SESSION['user_id'])) {
 }
 
 
-require_once '../config/Database.php'; 
+require_once '/../config/Database.php'; 
 
 $error_message = "";
 
