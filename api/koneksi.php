@@ -6,10 +6,23 @@ $db   = "learnify";
 $port = 4000;                  // Port wajib TiDB
 
 $koneksi = mysqli_init();
-mysqli_ssl_set($koneksi, NULL, NULL, NULL, NULL, NULL);
-mysqli_real_connect($koneksi, $host, $user, $pass, $db, $port, NULL, MYSQLI_CLIENT_SSL);
 
-if (mysqli_connect_errno()) {
+mysqli_ssl_set($koneksi, NULL, NULL, NULL, NULL, NULL);
+
+// Melakukan koneksi dengan bendera MYSQLI_CLIENT_SSL
+$link = mysqli_real_connect(
+    $koneksi, 
+    $host, 
+    $user, 
+    $pass, 
+    $db, 
+    $port, 
+    NULL, 
+    MYSQLI_CLIENT_SSL
+);
+
+if (!$link) {
     echo "Koneksi database gagal : " . mysqli_connect_error();
+    exit();
 }
 ?>
