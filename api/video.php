@@ -13,8 +13,8 @@ if(isset($_POST['video_selesai']) && isset($_SESSION['user_id'])) {
 ?>
 <?php
 // Panggil koneksi dan class (Pastikan letak foldernya benar)
-require_once 'config/Database.php';
-require_once 'classes/Video.php';
+require_once (__DIR__ . '/config/Database.php');
+require_once (__DIR__ . '/classes/Video.php');
 
 $database = new Database();
 $db = $database->getConnection();

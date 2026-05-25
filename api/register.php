@@ -6,8 +6,8 @@ if(isset($_SESSION['user_id'])) {
     exit;
 }
 
-require_once 'config/Database.php';
-require_once 'classes/User.php';
+require_once (__DIR__ . '/config/Database.php');
+require_once (__DIR__ . '/classes/User.php');
 
 $pesan_error = "";
 $pesan_sukses = "";
