@@ -8,9 +8,11 @@ class Database {
     public $conn;
 
     public function __construct() {
-        // Mengambil data rahasia dari Environment Variables Vercel, jika tidak ada pakai teks langsung (fallback)
         $this->host = getenv('DB_HOST') ? getenv('DB_HOST') : "gateway01.ap-southeast-1.prod.alicloud.tidbcloud.com";
-        $this->db_name = "learnify";
+        
+        // Kita ganti nama KEY-nya agar tidak tabrakan dengan cache typo lama di Vercel
+        $this->db_name = getenv('DB_DATABASE_BARU') ? getenv('DB_DATABASE_BARU') : "learnify";
+        
         $this->username = getenv('DB_USER') ? getenv('DB_USER') : "25qhFyHYwoJyP7o.root";
         $this->password = getenv('DB_PASS') ? getenv('DB_PASS') : "i9dMXmsOdQGUmhkh";
     }
@@ -20,7 +22,6 @@ class Database {
         try {
             $dsn = "mysql:host=" . $this->host . ";port=" . $this->port . ";dbname=" . $this->db_name;
             
-            // Konfigurasi wajib SSL TLS agar TiDB Cloud menerima koneksi dari Vercel
             $options = array(
                 PDO::MYSQL_ATTR_SSL_CA => true, 
                 PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
