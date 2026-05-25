@@ -10,7 +10,7 @@ class Database {
     public function __construct() {
         // Mengambil data rahasia dari Environment Variables Vercel, jika tidak ada pakai teks langsung (fallback)
         $this->host = getenv('DB_HOST') ? getenv('DB_HOST') : "gateway01.ap-southeast-1.prod.alicloud.tidbcloud.com";
-        $this->db_name = getenv('DB_NAME') ? getenv('DB_NAME') : "learnify";
+        $this->db_name = "learnify";
         $this->username = getenv('DB_USER') ? getenv('DB_USER') : "25qhFyHYwoJyP7o.root";
         $this->password = getenv('DB_PASS') ? getenv('DB_PASS') : "i9dMXmsOdQGUmhkh";
     }
