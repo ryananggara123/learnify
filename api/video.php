@@ -9,10 +9,10 @@ if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
     $_SESSION['nama'] = $_COOKIE['nama'] ?? '';
 }
 
-// 2. Gunakan koneksi.php yang sudah terbukti stabil
+// 2. Gunakan HANYA koneksi.php
 require_once 'koneksi.php';
 
-// 3. Jika menerima sinyal video selesai
+// 3. Jika sinyal video selesai, jalankan lalu exit
 if(isset($_POST['video_selesai']) && isset($_SESSION['user_id'])) {
     $id_login = $_SESSION['user_id'];
     mysqli_query($koneksi, "UPDATE users SET xp = xp + 50 WHERE id = '$id_login'");
@@ -26,26 +26,18 @@ if(!isset($_SESSION['user_id'])) {
     exit;
 }
 
-// HAPUS bagian Database.php dan Video.php yang bersifat OOP jika tidak diperlukan
-// Atau jika Anda tetap butuh class Video, pastikan class tersebut menggunakan koneksi $koneksi
-?>
-<?php
-$database = new Database();
-$db = $database->getConnection();
-$video = new Video($db);
+// 5. AMBIL DATA VIDEO (Ganti bagian class yang error dengan ini)
+$searchQuery = isset($_GET['q']) ? mysqli_real_escape_string($koneksi, trim($_GET['q'])) : '';
 
-$searchQuery = isset($_GET['q']) ? trim($_GET['q']) : '';
-$searchQueryLower = mb_strtolower($searchQuery, 'UTF-8');
-$stmt = $video->readAll();
-$videoList = [];
-if ($stmt && $stmt->rowCount() > 0) {
-    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        if ($searchQuery === '' || stripos($row['judul_video'], $searchQuery) !== false) {
-            $videoList[] = $row;
-        }
-    }
+$sql = "SELECT * FROM videos";
+if ($searchQuery !== '') {
+    $sql .= " WHERE judul LIKE '%$searchQuery%'";
 }
+
+$query_video = mysqli_query($koneksi, $sql);
 ?>
+
+
 <!DOCTYPE html>
 <html lang="id">
 <head>

@@ -16,7 +16,7 @@ if(!isset($_SESSION['user_id'])) {
 
 // Gunakan require_once agar tidak terjadi duplikasi/error redeclare
 require_once 'koneksi.php';
-require_once 'includes/bank_soal.php';
+require_once '/includes/bank_soal.php';
 
 // Fungsi untuk menghitung grade berdasarkan total XP
 function calculateGradeFromXP($totalXp) {
