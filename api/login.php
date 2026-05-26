@@ -3,28 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// ... Kode Anda sebelumnya untuk query database ($stmt->execute) ...
-$user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-if ($user && password_verify($password, $user['password'])) {
-    
-    // 1. WAJIB DI PALING ATAS: Set Session asli aplikasi
-    $_SESSION['user_id'] = $user['id'];
-    $_SESSION['nama'] = $user['nama'];
-
-    // 2. Set Cookie Backup global dengan aman
-    setcookie('user_id', $user['id'], time() + 86400, "/");
-    setcookie('nama', $user['nama'], time() + 86400, "/");
-
-    // 3. Alihkan langsung ke dashboard menggunakan rute bersih Vercel
-    // Pastikan TIDAK ADA perintah 'echo' atau tag HTML apa pun di atas baris ini!
-    header("Location: /dashboard");
-    exit;
-
-} else {
-    $error_message = "NISN/Email atau kata sandi salah.";
-}
-
+$error_message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Gunakan trim untuk menghapus spasi tidak sengaja yang diketik user
@@ -48,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $db = new PDO($dsn, $username_db, $password_db, $options);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // PERBAIKAN DI SINI: Hapus semua kata kunci BINARY agar pencarian string di TiDB normal
+        // Cari user berdasarkan NISN atau Email
         $query = "SELECT * FROM users WHERE (nisn = :username OR email = :username) AND password = :password LIMIT 1";
         $stmt = $db->prepare($query);
         $stmt->bindParam(':username', $username);
@@ -62,12 +41,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_id'] = $row['id'];
             $_SESSION['nama']    = $row['nama'];
             
-            // 2. PENTING UNTUK VERCEL: Set Cookie Backup agar login tidak lepas akibat serverless stateless
-            setcookie('user_id', $row['id'], time() + 86400, "/", "", true, true);
-            setcookie('nama', $row['nama'], time() + 86400, "/", "", true, true);
+            // 2. Set Cookie Backup (Global Path "/") untuk Serverless Vercel
+            setcookie('user_id', $row['id'], time() + 86400, "/");
+            setcookie('nama', $row['nama'], time() + 86400, "/");
             
-            session_write_close();
-            header("Location: /dashboard"); // Melempar ke rute bersih Vercel
+            // 3. Pindah ke Dashboard
+            header("Location: /dashboard");
             exit;
         } else {
             $error_message = "NISN/Email atau Kata Sandi salah! Periksa kembali inputan Anda.";
@@ -116,7 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <button type="submit" class="btn-submit" id="btnLogin">Masuk</button>
             </form>
             <div class="auth-links">
-                Belum punya akun? <a href="register.php">Daftar di sini</a>
+                Belum punya akun? <a href="/register">Daftar di sini</a>
             </div>
         </div>
     </div>
