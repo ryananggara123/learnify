@@ -3,22 +3,25 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// ... bagian setelah verifikasi password sukses ...
+// ... Kode Anda sebelumnya untuk verifikasi password ...
+if ($user && password_verify($password, $user['password'])) {
+    
+    // 1. Set Session asli untuk aplikasi
+    $_SESSION['user_id'] = $user['id'];
+    $_SESSION['nama'] = $user['nama'];
 
-// 1. Simpan ke Session asli
-$_SESSION['user_id'] = $user['id'];
-$_SESSION['nama']    = $user['nama'];
+    // 2. PERBAIKAN COOKIE BACKUP UNTUK VERCEL (Pastikan parameternya lengkap & global '/')
+    // Expired dalam 1 hari (time() + 86400)
+    setcookie('user_id', $user['id'], time() + 86400, "/");
+    setcookie('nama', $user['nama'], time() + 86400, "/");
 
-// 2. Buat Cookie Backup GLOBAL untuk Vercel (Berlaku 1 hari / 86400 detik)
-// PENTING: Gunakan array parameter atau sertakan path '/' di bagian akhir
-setcookie('user_id', $user['id'], time() + 86400, "/");
-setcookie('nama', $user['nama'], time() + 86400, "/");
+    // 3. Alihkan ke rute bersih dashboard sesuai vercel.json
+    header("Location: /dashboard");
+    exit;
 
-// 3. Alihkan ke rute dashboard bersih sesuai vercel.json
-header("Location: /dashboard");
-exit;
-
-$error_message = "";
+} else {
+    $error_message = "NISN/Email atau kata sandi salah.";
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Gunakan trim untuk menghapus spasi tidak sengaja yang diketik user
