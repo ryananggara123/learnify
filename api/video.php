@@ -9,34 +9,41 @@ if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
     $_SESSION['nama'] = $_COOKIE['nama'] ?? '';
 }
 
-// 2. Gunakan HANYA koneksi.php
 require_once 'koneksi.php';
 
-// 3. Jika sinyal video selesai, jalankan lalu exit
-if(isset($_POST['video_selesai']) && isset($_SESSION['user_id'])) {
-    $id_login = $_SESSION['user_id'];
-    mysqli_query($koneksi, "UPDATE users SET xp = xp + 50 WHERE id = '$id_login'");
-    echo "sukses";
-    exit;
-}
-
-// 4. Proteksi Halaman
-if(!isset($_SESSION['user_id'])) {
-    header("Location: /login");
-    exit;
-}
-
-// 5. AMBIL DATA VIDEO (Ganti bagian class yang error dengan ini)
-$searchQuery = isset($_GET['q']) ? mysqli_real_escape_string($koneksi, trim($_GET['q'])) : '';
-
-$sql = "SELECT * FROM videos";
-if ($searchQuery !== '') {
-    $sql .= " WHERE judul LIKE '%$searchQuery%'";
-}
-
+// Cek apakah tabel 'videos' ada data
+$sql = "SELECT * FROM videos"; 
 $query_video = mysqli_query($koneksi, $sql);
+
+// DEBUGGING: Cek apakah ada error di SQL
+if (!$query_video) {
+    die("Error SQL: " . mysqli_error($koneksi));
+}
+
+// Cek jumlah data
+$jumlah_data = mysqli_num_rows($query_video);
 ?>
 
+<div class="video-container">
+    <?php 
+    if ($jumlah_data > 0) {
+        while ($row = mysqli_fetch_assoc($query_video)) {
+            // PASTIKAN nama kolom ('judul', 'url') sesuai dengan kolom di tabel database Anda!
+            $judul = isset($row['judul']) ? $row['judul'] : 'Tanpa Judul';
+            $url = isset($row['url']) ? $row['url'] : '';
+            
+            echo '<div class="video-card">';
+            echo '<h3>' . htmlspecialchars($judul) . '</h3>';
+            if (!empty($url)) {
+                echo '<iframe src="'.$url.'" width="100%" height="315" frameborder="0" allowfullscreen></iframe>';
+            }
+            echo '</div>';
+        }
+    } else {
+        echo "<p style='text-align:center;'>Data video kosong. Pastikan database Anda memiliki isi di tabel 'videos'. (Total data: $jumlah_data)</p>";
+    }
+    ?>
+</div>
 
 <!DOCTYPE html>
 <html lang="id">
