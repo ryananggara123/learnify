@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Cek apakah session user_id ada, jika tidak ada tendang ke halaman login
 if(!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: /login.php");
     exit;
 }
 

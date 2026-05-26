@@ -2,7 +2,7 @@
 session_start();
 
 if(isset($_SESSION['user_id'])) {
-    header("Location: dashboard.php");
+    header("Location: /dashboard.php");
     exit;
 }
 
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
             $_SESSION['user_id'] = $row['id'];
             $_SESSION['nama']    = $row['nama'];
-            header("Location: dashboard.php");
+            header("Location: /dashboard.php");
             exit;
         } else {
             $error_message = "NISN/Email atau Kata Sandi salah!";
