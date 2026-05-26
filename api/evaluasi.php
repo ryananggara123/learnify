@@ -14,6 +14,7 @@ if(!isset($_SESSION['user_id'])) {
     exit;
 }
 
+require_once $_SERVER['DOCUMENT_ROOT'] . '/koneksi.php';
 // Ganti baris pemanggilan dengan ini
 $path_soal = $_SERVER['DOCUMENT_ROOT'] . '/includes/bank_soal.php';
 
