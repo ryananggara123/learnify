@@ -3,23 +3,28 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// ... Kode pengecekan password Anda di login.php ...
+// ... Kode Anda sebelumnya untuk query database ($stmt->execute) ...
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
 if ($user && password_verify($password, $user['password'])) {
     
-    // 1. Set Session asli
+    // 1. WAJIB DI PALING ATAS: Set Session asli aplikasi
     $_SESSION['user_id'] = $user['id'];
     $_SESSION['nama'] = $user['nama'];
 
-    // 2. PERBAIKAN: Gunakan setcookie (TANPA UNDERSCORE)
+    // 2. Set Cookie Backup global dengan aman
     setcookie('user_id', $user['id'], time() + 86400, "/");
     setcookie('nama', $user['nama'], time() + 86400, "/");
 
-    // 3. Alihkan ke rute dashboard
+    // 3. Alihkan langsung ke dashboard menggunakan rute bersih Vercel
+    // Pastikan TIDAK ADA perintah 'echo' atau tag HTML apa pun di atas baris ini!
     header("Location: /dashboard");
     exit;
+
 } else {
     $error_message = "NISN/Email atau kata sandi salah.";
 }
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Gunakan trim untuk menghapus spasi tidak sengaja yang diketik user
