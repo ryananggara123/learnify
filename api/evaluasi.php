@@ -3,15 +3,21 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// PENTING UNTUK VERCEL: Pulihkan session dari Cookie Backup jika serverless mereset memori session
 if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
     $_SESSION['user_id'] = $_COOKIE['user_id'];
     $_SESSION['nama'] = $_COOKIE['nama'] ?? '';
 }
 
+// Cek apakah session user_id ada, jika tidak ada tendang ke halaman login bersih Vercel
 if(!isset($_SESSION['user_id'])) {
     header("Location: /login");
     exit;
 }
+
+// Koneksi database dan bank soal (kode Anda selanjutnya)
+include 'koneksi.php';
+include 'includes/bank_soal.php';
 
 // Koneksi database dan bank soal
 include 'koneksi.php';

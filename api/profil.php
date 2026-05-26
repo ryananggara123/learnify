@@ -3,21 +3,20 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// PENTING UNTUK VERCEL: Pulihkan session dari Cookie Backup jika memori serverless ter-reset
 if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
     $_SESSION['user_id'] = $_COOKIE['user_id'];
     $_SESSION['nama'] = $_COOKIE['nama'] ?? '';
 }
 
-// 1. Proteksi Halaman
+// 1. Proteksi Halaman (Gunakan pengalihan rute bersih /login sesuai vercel.json)
 if (!isset($_SESSION['user_id'])) { 
     header("Location: /login");
     exit;
 }
 
-// 2. Ambil file koneksi database
+// 2. Ambil file koneksi database Anda selanjutnya...
 include "koneksi.php";
-
-// 3. Ambil data ID
 $id_login = $_SESSION['user_id'];
 $pesan_error = "";
 $pesan_sukses = "";
@@ -158,7 +157,7 @@ $foto_src = "https://ui-avatars.com/api/?name=" . urlencode($_SESSION['nama']) .
                 <a href="/dashboard" class="btn btn-main">
                     <i class="fa-solid fa-graduation-cap"></i> Kembali Belajar
                 </a>
-                <a href="logout.php" class="btn btn-logout">
+                <a href="/logout" class="btn btn-logout">
                     <i class="fa-solid fa-arrow-right-from-bracket"></i> Keluar Sistem
                 </a>
             </div>

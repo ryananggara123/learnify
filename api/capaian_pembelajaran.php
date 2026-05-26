@@ -3,21 +3,20 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Pulihkan session dari Cookie Backup jika serverless mereset memori
+// PENTING UNTUK VERCEL: Pulihkan session dari Cookie Backup jika memori serverless ter-reset
 if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
     $_SESSION['user_id'] = $_COOKIE['user_id'];
     $_SESSION['nama'] = $_COOKIE['nama'] ?? '';
 }
 
-// Jika tetap tidak ada session, tendang ke rute bersih
+// PROTEKSI HALAMAN: Jika session tetap tidak ada, tendang ke rute bersih
 if(!isset($_SESSION['user_id'])) {
     header("Location: /login");
     exit;
 }
 
-// Panggil koneksi database kamu
+// Panggil koneksi database Anda selanjutnya...
 include "koneksi.php";
-
 $id_login = $_SESSION['user_id'];
 
 // 1. Ambil status apakah user sudah pernah membaca halaman ini atau belum
