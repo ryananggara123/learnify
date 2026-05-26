@@ -14,8 +14,18 @@ if(!isset($_SESSION['user_id'])) {
     exit;
 }
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/bank_soal.php';
+// Ganti baris pemanggilan dengan ini
+$path_soal = $_SERVER['DOCUMENT_ROOT'] . '/includes/bank_soal.php';
 
+if (file_exists($path_soal)) {
+    require_once $path_soal;
+    // PENTING: Jika variabel tetap tidak ditemukan, mungkin didefinisikan di dalam fungsi atau scope lain
+    if (!isset($bank_kuis)) {
+        die("Fatal Error: File bank_soal.php ditemukan, TAPI variabel \$bank_kuis tidak ada di dalamnya. Buka file bank_soal.php dan pastikan kodenya dimulai dengan: \$bank_kuis = [...];");
+    }
+} else {
+    die("Fatal Error: File bank_soal.php tidak ditemukan di path: " . $path_soal);
+}
 // Fungsi untuk menghitung grade berdasarkan total XP
 function calculateGradeFromXP($totalXp) {
     if ($totalXp >= 1200) {

@@ -13,7 +13,6 @@ if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
     $_SESSION['nama'] = $_COOKIE['nama'] ?? '';
 }
 
-<?php
 require_once 'koneksi.php'; // Pastikan path koneksi.php sudah benar (mungkin perlu '../koneksi.php' jika berada di folder api)
 
 if (!$koneksi) {
@@ -38,7 +37,6 @@ if (mysqli_num_rows($query_video) == 0) {
 while ($row = mysqli_fetch_assoc($query_video)) {
     // ... tampilkan video Anda ...
 }
-?>
 
 // Cek apakah data ada
 $jumlah_data = mysqli_num_rows($query_video);
@@ -54,6 +52,7 @@ if ($jumlah_data == 0) {
         // ... dst ...
     }
 }
+?>
 
 <!DOCTYPE html>
 <html lang="id">
