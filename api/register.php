@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
 if(isset($_SESSION['user_id'])) {
     header("Location: dashboard.php");
@@ -52,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <title>Daftar - Learnify</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/register.css">
+    <link rel="stylesheet" href="/css/register.css">
 </head>
 <body>
 
@@ -105,6 +107,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </div>
     </div>
 
-    <script src="js/register.js"></script>
+    <script src="/js/register.js"></script>
 </body>
 </html>
