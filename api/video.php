@@ -3,33 +3,33 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// PENTING UNTUK VERCEL: Pulihkan session dari Cookie Backup jika memori serverless ter-reset
+// 1. Pulihkan session
 if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
     $_SESSION['user_id'] = $_COOKIE['user_id'];
     $_SESSION['nama'] = $_COOKIE['nama'] ?? '';
 }
 
-include "koneksi.php";
+// 2. Gunakan koneksi.php yang sudah terbukti stabil
+require_once 'koneksi.php';
 
-// Jika menerima sinyal bahwa video selesai ditonton
+// 3. Jika menerima sinyal video selesai
 if(isset($_POST['video_selesai']) && isset($_SESSION['user_id'])) {
     $id_login = $_SESSION['user_id'];
-    // Tambah 50 XP
     mysqli_query($koneksi, "UPDATE users SET xp = xp + 50 WHERE id = '$id_login'");
-    echo "sukses"; // Balasan untuk JavaScript
-    exit; // Stop proses halaman agar tidak reload semua HTML
+    echo "sukses";
+    exit;
 }
 
-// PROTEKSI HALAMAN: Jika session tetap kosong setelah memulihkan cookie, arahkan ke rute login bersih
+// 4. Proteksi Halaman
 if(!isset($_SESSION['user_id'])) {
     header("Location: /login");
     exit;
 }
+
+// HAPUS bagian Database.php dan Video.php yang bersifat OOP jika tidak diperlukan
+// Atau jika Anda tetap butuh class Video, pastikan class tersebut menggunakan koneksi $koneksi
 ?>
 <?php
-// Panggil koneksi dan class video Anda selanjutnya...
-require_once (__DIR__ . '/config/Database.php');
-require_once (__DIR__ . '/classes/Video.php');
 $database = new Database();
 $db = $database->getConnection();
 $video = new Video($db);
