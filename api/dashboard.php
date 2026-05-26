@@ -3,9 +3,15 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// PERBAIKAN: Gunakan rute bersih Vercel tanpa ekstensi .php
+// PENTING UNTUK VERCEL: Pulihkan session dari Cookie Backup jika serverless mereset memori session
+if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
+    $_SESSION['user_id'] = $_COOKIE['user_id'];
+    $_SESSION['nama'] = $_COOKIE['nama'] ?? '';
+}
+
+// Cek apakah session user_id ada, jika tidak ada kembalikan ke rute bersih /login
 if(!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: /login");
     exit;
 }
 

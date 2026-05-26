@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // PERBAIKAN: Jika user tidak sengaja membuka halaman login padahal sudah masuk, lempar ke rute bersih
 if(isset($_SESSION['user_id'])) {
-    header("Location: dashboard.php");
+    header("Location: /dashboard");
     exit;
 }
 
@@ -43,13 +43,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($row) {
-            // Set SESSION secara lengkap
+            // 1. Set SESSION utama
             $_SESSION['user_id'] = $row['id'];
             $_SESSION['nama']    = $row['nama'];
             
-            // Simpan session lalu redirect secara absolut menggunakan rute vercel.json
+            // 2. PENTING UNTUK VERCEL: Set Cookie Backup agar login tidak lepas akibat serverless stateless
+            setcookie('user_id', $row['id'], time() + 86400, "/", "", true, true);
+            setcookie('nama', $row['nama'], time() + 86400, "/", "", true, true);
+            
             session_write_close();
-            header("Location: dashboard.php");
+            header("Location: /dashboard"); // Melempar ke rute bersih Vercel
             exit;
         } else {
             $error_message = "NISN/Email atau Kata Sandi salah! Periksa kembali inputan Anda.";
