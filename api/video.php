@@ -15,22 +15,24 @@ require_once 'koneksi.php';
 $sql = "SELECT * FROM videos"; 
 $query_video = mysqli_query($koneksi, $sql);
 
+// Cek apakah query gagal
 if (!$query_video) {
-    die("Error Database: " . mysqli_error($koneksi)); // Jika ini muncul, berarti nama tabel salah
+    die("Error SQL (Mohon periksa nama tabel): " . mysqli_error($koneksi));
 }
 
-if (mysqli_num_rows($query_video) > 0) {
-    while ($row = mysqli_fetch_assoc($query_video)) {
-        // DEBUG: Print data untuk melihat nama kolom yang benar
-        // echo "<pre>"; print_r($row); echo "</pre>"; 
-        
-        $judul = $row['judul'] ?? 'Tanpa Judul'; // Pastikan 'judul' sesuai nama kolom
-        $url = $row['url'] ?? '';               // Pastikan 'url' sesuai nama kolom
-        
-        // ... tampilkan video ...
-    }
+// Cek apakah data ada
+$jumlah_data = mysqli_num_rows($query_video);
+if ($jumlah_data == 0) {
+    echo "<div style='color:red; text-align:center; padding:20px;'>
+          Tabel 'videos' ada, tapi **tidak ada data di dalamnya**. 
+          <br>Silakan buka TiDB Cloud Dashboard, pastikan ada baris data di tabel 'videos'.
+          </div>";
 } else {
-    echo "Database kosong. Pastikan Anda sudah mengisi tabel 'videos' di TiDB Cloud.";
+    // Tampilkan video
+    while ($row = mysqli_fetch_assoc($query_video)) {
+        echo "<div> Judul: " . htmlspecialchars($row['judul']) . "</div>";
+        // ... dst ...
+    }
 }
 
 <!DOCTYPE html>

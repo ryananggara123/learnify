@@ -20,10 +20,11 @@ if (file_exists($path_soal)) {
     require_once $path_soal;
     // Cek apakah variabel sudah terisi
     if (!isset($bank_kuis)) {
-        die("File ditemukan, TAPI variabel \$bank_kuis TIDAK ADA di dalam file tersebut.");
+        die("File ditemukan, TAPI variabel \$bank_kuis tidak terdefinisi di dalamnya.");
     }
 } else {
-    die("Error Fatal: File bank_soal.php tidak ditemukan di: " . $path_soal);
+    die("Error Fatal: File tidak ditemukan! Saya mencari di sini: <strong>" . $path_soal . "</strong><br>
+         Silakan cek di GitHub: Apakah folder 'includes' ada? Apakah nama filenya benar 'bank_soal.php' (huruf kecil semua)?");
 }
 
 // Fungsi untuk menghitung grade berdasarkan total XP
