@@ -14,18 +14,8 @@ if(!isset($_SESSION['user_id'])) {
     exit;
 }
 
-$path_soal = __DIR__ . '/includes/bank_soal.php';
-
-if (file_exists($path_soal)) {
-    require_once $path_soal;
-    // Cek apakah variabel sudah terisi
-    if (!isset($bank_kuis)) {
-        die("File ditemukan, TAPI variabel \$bank_kuis tidak terdefinisi di dalamnya.");
-    }
-} else {
-    die("Error Fatal: File tidak ditemukan! Saya mencari di sini: <strong>" . $path_soal . "</strong><br>
-         Silakan cek di GitHub: Apakah folder 'includes' ada? Apakah nama filenya benar 'bank_soal.php' (huruf kecil semua)?");
-}
+// Tambahkan '../' untuk naik satu level keluar dari folder 'api'
+require_once __DIR__ . '/../includes/bank_soal.php';
 
 // Fungsi untuk menghitung grade berdasarkan total XP
 function calculateGradeFromXP($totalXp) {

@@ -9,16 +9,22 @@ if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
     $_SESSION['nama'] = $_COOKIE['nama'] ?? '';
 }
 
-require_once 'koneksi.php';
+<?php
+require_once 'koneksi.php'; // Pastikan path koneksi.php sudah benar (mungkin perlu '../koneksi.php' jika berada di folder api)
 
-// Ganti bagian pengambilan data di video.php dengan ini:
-$sql = "SELECT * FROM videos"; 
-$query_video = mysqli_query($koneksi, $sql);
-
-// Cek apakah query gagal
-if (!$query_video) {
-    die("Error SQL (Mohon periksa nama tabel): " . mysqli_error($koneksi));
+// Debug koneksi
+if (!$koneksi) {
+    die("Koneksi gagal: " . mysqli_connect_error());
 }
+
+$sql = "SELECT * FROM videos";
+$result = mysqli_query($koneksi, $sql);
+
+if (!$result) {
+    // Ini akan menampilkan alasan kenapa video blank
+    die("Error Query: " . mysqli_error($koneksi));
+}
+?>
 
 // Cek apakah data ada
 $jumlah_data = mysqli_num_rows($query_video);
