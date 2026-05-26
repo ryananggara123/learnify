@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // PERBAIKAN: Gunakan rute bersih Vercel tanpa ekstensi .php
 if(!isset($_SESSION['user_id'])) {
-    header("Location: /login");
+    header("Location: login.php");
     exit;
 }
 

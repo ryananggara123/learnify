@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // PERBAIKAN: Jika user tidak sengaja membuka halaman login padahal sudah masuk, lempar ke rute bersih
 if(isset($_SESSION['user_id'])) {
-    header("Location: /dashboard");
+    header("Location: dashboard.php");
     exit;
 }
 
@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             // Simpan session lalu redirect secara absolut menggunakan rute vercel.json
             session_write_close();
-            header("Location: /dashboard");
+            header("Location: dashboard.php");
             exit;
         } else {
             $error_message = "NISN/Email atau Kata Sandi salah! Periksa kembali inputan Anda.";
