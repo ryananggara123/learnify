@@ -3,9 +3,9 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Cek apakah session user_id ada, jika tidak ada tendang ke halaman login
+// PERBAIKAN: Gunakan rute bersih Vercel tanpa ekstensi .php
 if(!isset($_SESSION['user_id'])) {
-    header("Location: /login.php");
+    header("Location: /login");
     exit;
 }
 

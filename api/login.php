@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Jika sudah ada session, langsung lempar ke rute /dashboard Vercel
+// PERBAIKAN: Jika user tidak sengaja membuka halaman login padahal sudah masuk, lempar ke rute bersih
 if(isset($_SESSION['user_id'])) {
     header("Location: /dashboard");
     exit;
