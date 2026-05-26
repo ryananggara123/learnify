@@ -1,22 +1,45 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Cek apakah session user_id ada, jika tidak ada kembalikan ke halaman utama (index.php)
 if(!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header("Location: /index.php"); 
     exit;
 }
 
-include "koneksi.php";
+// Panggil koneksi PDO TiDB Cloud yang sudah kita buat sebelumnya
+require_once (__DIR__ . '/config/Database.php');
 $id_login = $_SESSION['user_id'];
-$user_query = mysqli_query($koneksi, "SELECT * FROM users WHERE id = '$id_login'");
-$user_data = mysqli_fetch_assoc($user_query);
 
-// Ambil XP dan Streak asli dari database
-$xp = isset($user_data['xp']) ? (int) $user_data['xp'] : 0;
-$streak = isset($user_data['streak']) ? (int) $user_data['streak'] : 0;
+$database = new Database();
+$db = $database->getConnection();
+
+$xp = 0;
+$streak = 0;
+$user_data = [];
+
+if ($db) {
+    try {
+        // Ambil data user menggunakan PDO yang support TiDB Cloud
+        $query = "SELECT * FROM users WHERE id = :id LIMIT 1";
+        $stmt = $db->prepare($query);
+        $stmt->bindParam(':id', $id_login, PDO::PARAM_INT);
+        $stmt->execute();
+        
+        if ($stmt->rowCount() > 0) {
+            $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
+            $xp = isset($user_data['xp']) ? (int) $user_data['xp'] : 0;
+            $streak = isset($user_data['streak']) ? (int) $user_data['streak'] : 0;
+        }
+    } catch (PDOException $e) {
+        error_log("Gagal mengambil data user: " . $e->getMessage());
+    }
+}
 
 // Logika Badge Dinamis: Setiap 200 XP dapat 1 Badge
 $badge = floor($xp / 200); 
-
 $progress = $xp > 0 ? min(100, intval($xp / 1500 * 100)) : 0;
 ?>
 <!DOCTYPE html>
