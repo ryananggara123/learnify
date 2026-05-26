@@ -14,9 +14,17 @@ if(!isset($_SESSION['user_id'])) {
     exit;
 }
 
-// Gunakan require_once agar tidak terjadi duplikasi/error redeclare
-require_once 'koneksi.php';
-require_once __DIR__ . '/includes/bank_soal.php';
+$path_soal = __DIR__ . '/includes/bank_soal.php';
+
+if (file_exists($path_soal)) {
+    require_once $path_soal;
+    // Cek apakah variabel sudah terisi
+    if (!isset($bank_kuis)) {
+        die("File ditemukan, TAPI variabel \$bank_kuis TIDAK ADA di dalam file tersebut.");
+    }
+} else {
+    die("Error Fatal: File bank_soal.php tidak ditemukan di: " . $path_soal);
+}
 
 // Fungsi untuk menghitung grade berdasarkan total XP
 function calculateGradeFromXP($totalXp) {

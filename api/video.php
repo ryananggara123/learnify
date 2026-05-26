@@ -11,39 +11,27 @@ if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
 
 require_once 'koneksi.php';
 
-// Cek apakah tabel 'videos' ada data
+// Ganti bagian pengambilan data di video.php dengan ini:
 $sql = "SELECT * FROM videos"; 
 $query_video = mysqli_query($koneksi, $sql);
 
-// DEBUGGING: Cek apakah ada error di SQL
 if (!$query_video) {
-    die("Error SQL: " . mysqli_error($koneksi));
+    die("Error Database: " . mysqli_error($koneksi)); // Jika ini muncul, berarti nama tabel salah
 }
 
-// Cek jumlah data
-$jumlah_data = mysqli_num_rows($query_video);
-?>
-
-<div class="video-container">
-    <?php 
-    if ($jumlah_data > 0) {
-        while ($row = mysqli_fetch_assoc($query_video)) {
-            // PASTIKAN nama kolom ('judul', 'url') sesuai dengan kolom di tabel database Anda!
-            $judul = isset($row['judul']) ? $row['judul'] : 'Tanpa Judul';
-            $url = isset($row['url']) ? $row['url'] : '';
-            
-            echo '<div class="video-card">';
-            echo '<h3>' . htmlspecialchars($judul) . '</h3>';
-            if (!empty($url)) {
-                echo '<iframe src="'.$url.'" width="100%" height="315" frameborder="0" allowfullscreen></iframe>';
-            }
-            echo '</div>';
-        }
-    } else {
-        echo "<p style='text-align:center;'>Data video kosong. Pastikan database Anda memiliki isi di tabel 'videos'. (Total data: $jumlah_data)</p>";
+if (mysqli_num_rows($query_video) > 0) {
+    while ($row = mysqli_fetch_assoc($query_video)) {
+        // DEBUG: Print data untuk melihat nama kolom yang benar
+        // echo "<pre>"; print_r($row); echo "</pre>"; 
+        
+        $judul = $row['judul'] ?? 'Tanpa Judul'; // Pastikan 'judul' sesuai nama kolom
+        $url = $row['url'] ?? '';               // Pastikan 'url' sesuai nama kolom
+        
+        // ... tampilkan video ...
     }
-    ?>
-</div>
+} else {
+    echo "Database kosong. Pastikan Anda sudah mengisi tabel 'videos' di TiDB Cloud.";
+}
 
 <!DOCTYPE html>
 <html lang="id">
