@@ -33,8 +33,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $db = new PDO($dsn, $username_db, $password_db, $options);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // KITA SANGATKAN: Gunakan BINARY untuk memastikan kecocokan teks yang diketik di login
-        $query = "SELECT * FROM users WHERE (BINARY nisn = :username OR BINARY email = :username) AND BINARY password = :password LIMIT 1";
+        // PERBAIKAN DI SINI: Hapus semua kata kunci BINARY agar pencarian string di TiDB normal
+        $query = "SELECT * FROM users WHERE (nisn = :username OR email = :username) AND password = :password LIMIT 1";
         $stmt = $db->prepare($query);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':password', $password);
@@ -68,12 +68,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Masuk - Learnify</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
     <div class="auth-container">
         <div class="auth-card">
-            <img src="../assets/img/logo.png" alt="Learnify Logo" class="auth-logo" onerror="this.style.display='none'">
+            <img src="/assets/img/logo.png" alt="Learnify Logo" class="auth-logo" onerror="this.style.display='none'">
             <h2>Selamat Datang</h2>
             <p>Masuk dengan NISN atau Email untuk belajar</p>
 
@@ -102,6 +102,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
         </div>
     </div>
-    <script src="../js/login.js"></script>
+    <script src="/js/login.js"></script>
 </body>
 </html>
