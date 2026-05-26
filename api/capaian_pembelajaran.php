@@ -1,7 +1,17 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Pulihkan session dari Cookie Backup jika serverless mereset memori
+if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
+    $_SESSION['user_id'] = $_COOKIE['user_id'];
+    $_SESSION['nama'] = $_COOKIE['nama'] ?? '';
+}
+
+// Jika tetap tidak ada session, tendang ke rute bersih
 if(!isset($_SESSION['user_id'])) {
-    header("Location: index.php");
+    header("Location: /login");
     exit;
 }
 
@@ -94,7 +104,7 @@ if(isset($data_user['status_baca_cp']) && $data_user['status_baca_cp'] == 0) {
             </div>
             
             <div class="cp-footer">
-                <a href="dashboard.php" class="btn-back">
+                <a href="/dashboard" class="btn-back">
                     <i class="fas fa-arrow-left"></i> Kembali ke Dashboard
                 </a>
             </div>

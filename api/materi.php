@@ -1,8 +1,18 @@
 <?php
-session_start();
-if(!isset($_SESSION['user_id'])) { 
-    header("Location: login.php"); 
-    exit; 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Pulihkan session dari Cookie Backup jika serverless mereset memori
+if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
+    $_SESSION['user_id'] = $_COOKIE['user_id'];
+    $_SESSION['nama'] = $_COOKIE['nama'] ?? '';
+}
+
+// Jika tetap tidak ada session, tendang ke rute bersih
+if(!isset($_SESSION['user_id'])) {
+    header("Location: /login");
+    exit;
 }
 
 $searchQuery = isset($_GET['q']) ? trim($_GET['q']) : '';
@@ -17,7 +27,7 @@ $searchQueryLower = mb_strtolower($searchQuery, 'UTF-8');
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <link rel="stylesheet" href="css/materi.css">
+    <link rel="stylesheet" href="/css/materi.css">
 </head>
 <body>
 
@@ -37,7 +47,7 @@ $searchQueryLower = mb_strtolower($searchQuery, 'UTF-8');
 
         <div class="materi-list">
             <?php if ($searchQuery === '' || stripos('1. Mengenal Bentuk Aljabar Penjelasan tentang variabel, koefisien, dan konstanta.', $searchQuery) !== false): ?>
-                <a href="isi_materi.php?bab=1" class="materi-item">
+                <a href="/isi_materi.php?bab=1" class="materi-item">
                     <div class="materi-info">
                         <div class="icon-circle"><i class="fas fa-square-root-variable"></i></div>
                         <div class="title-text">
@@ -111,7 +121,7 @@ $searchQueryLower = mb_strtolower($searchQuery, 'UTF-8');
             <div class="empty-search">Tidak ada materi yang cocok dengan pencarian Anda.</div>
         <?php endif; ?>
 
-        <a href="dashboard.php" class="btn-back"><i class="fas fa-arrow-left"></i> Kembali ke Menu Utama</a>
+        <a href="/dashboard" class="btn-back"><i class="fas fa-arrow-left"></i> Kembali ke Menu Utama</a>
     </div>
 
 </body>

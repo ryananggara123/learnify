@@ -1,7 +1,15 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
+    $_SESSION['user_id'] = $_COOKIE['user_id'];
+    $_SESSION['nama'] = $_COOKIE['nama'] ?? '';
+}
+
 if(!isset($_SESSION['user_id'])) {
-    header("Location: index.php");
+    header("Location: /login");
     exit;
 }
 
@@ -268,7 +276,7 @@ if(isset($_POST['submit_kuis']) && isset($_POST['answer'])) {
                 <?php endif; ?>
                 <div class="grid-kuis">
                     <?php foreach($filteredKuis as $id => $data): ?>
-                        <a href="evaluasi.php?kuis=<?= $id ?>" class="kuis-item">
+                        <a href="/evaluasi?kuis=<?= $id ?>" class="kuis-item">
                             <i class="fas fa-file-alt"></i>
                             <h4><?= $data['judul'] ?></h4>
                             <small><?= count($data['soal']) ?> Soal · Cepat & interaktif</small>

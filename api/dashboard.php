@@ -190,7 +190,7 @@ $progress = $xp > 0 ? min(100, intval($xp / 1500 * 100)) : 0;
                 <div class="card-content">
                     <h3>Video Pembelajaran</h3>
                     <p>Tonton penjelasan konsep matematika aljabar dengan animasi menarik.</p>
-                    <a href="video.php" class="card-action"><i class="fas fa-play-circle"></i> Tonton</a>
+                    <a href="/video" class="card-action"><i class="fas fa-play-circle"></i> Tonton</a>
                 </div>
             </div>
 
@@ -201,7 +201,7 @@ $progress = $xp > 0 ? min(100, intval($xp / 1500 * 100)) : 0;
                 <div class="card-content">
                     <h3>Evaluasi & Kuis</h3>
                     <p>Uji pemahamanmu dengan kuis interaktif aljabar dan dapatkan skor.</p>
-                    <a href="evaluasi.php" class="card-action"><i class="fas fa-laptop-code"></i> Kerjakan</a>
+                    <a href="/evaluasi" class="card-action"><i class="fas fa-laptop-code"></i> Kerjakan</a>
                 </div>
             </div>
 
@@ -212,7 +212,7 @@ $progress = $xp > 0 ? min(100, intval($xp / 1500 * 100)) : 0;
     <div class="card-content">
         <h3>Pusat Bantuan</h3>
         <p>Butuh bantuan atau panduan sistem? Klik di sini.</p>
-        <a href="bantuan.php" class="card-action"><i class="fas fa-info-circle"></i> Buka Bantuan</a>
+        <a href="/bantuan" class="card-action"><i class="fas fa-info-circle"></i> Buka Bantuan</a>
     </div>
 </div>
     </main>

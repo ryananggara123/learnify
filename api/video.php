@@ -1,21 +1,35 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Pulihkan session dari Cookie Backup Vercel
+if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
+    $_SESSION['user_id'] = $_COOKIE['user_id'];
+    $_SESSION['nama'] = $_COOKIE['nama'] ?? '';
+}
+
+if (!isset($_SESSION['user_id'])) {
+    header("Location: /login");
+    exit;
+}
+
 include "koneksi.php";
 
 // Jika menerima sinyal bahwa video selesai ditonton
 if(isset($_POST['video_selesai']) && isset($_SESSION['user_id'])) {
     $id_login = $_SESSION['user_id'];
-    // Tambah 50 XP
     mysqli_query($koneksi, "UPDATE users SET xp = xp + 50 WHERE id = '$id_login'");
-    echo "sukses"; // Balasan untuk JavaScript
-    exit; // Stop proses halaman agar tidak reload semua HTML
+    echo "sukses"; 
+    exit; 
 }
-?>
-<?php
+
 // Panggil koneksi dan class (Pastikan letak foldernya benar)
 require_once (__DIR__ . '/config/Database.php');
 require_once (__DIR__ . '/classes/Video.php');
+?>
 
+<?php
 $database = new Database();
 $db = $database->getConnection();
 $video = new Video($db);
@@ -134,6 +148,6 @@ if ($stmt && $stmt->rowCount() > 0) {
         ?>
     </div>
 
-    <script src="js/video.js"></script>
+    <script src="/js/video.js"></script>
 </body>
 </html>

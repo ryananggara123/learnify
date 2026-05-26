@@ -1,9 +1,16 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
+    $_SESSION['user_id'] = $_COOKIE['user_id'];
+    $_SESSION['nama'] = $_COOKIE['nama'] ?? '';
+}
 
 // 1. Proteksi Halaman
 if (!isset($_SESSION['user_id'])) { 
-    header("Location: login.php");
+    header("Location: /login");
     exit;
 }
 
@@ -82,11 +89,7 @@ $badge_user = $data['badge'];
 // --- LOGIKA FOTO FIX & DINAMIS ---
 $foto_dari_db = isset($data['foto']) ? $data['foto'] : "";
 
-if (!empty($foto_dari_db) && file_exists($foto_dari_db)) {
-    $foto_src = $foto_dari_db;
-} else {
-    $foto_src = "assets/img/avatars/default.png"; // Fallback aman
-}
+$foto_src = "https://ui-avatars.com/api/?name=" . urlencode($_SESSION['nama']) . "&background=4a90e2&color=fff";
 
 ?>
 <!DOCTYPE html>
@@ -152,7 +155,7 @@ if (!empty($foto_dari_db) && file_exists($foto_dari_db)) {
             </form>
 
             <div class="button-group">
-                <a href="dashboard.php" class="btn btn-main">
+                <a href="/dashboard" class="btn btn-main">
                     <i class="fa-solid fa-graduation-cap"></i> Kembali Belajar
                 </a>
                 <a href="logout.php" class="btn btn-logout">

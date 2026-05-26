@@ -1,7 +1,15 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
+    $_SESSION['user_id'] = $_COOKIE['user_id'];
+    $_SESSION['nama'] = $_COOKIE['nama'] ?? '';
+}
+
 if(!isset($_SESSION['user_id'])) { 
-    header("Location: login.php"); 
+    header("Location: /login"); 
     exit; 
 }
 ?>
@@ -14,7 +22,7 @@ if(!isset($_SESSION['user_id'])) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <link rel="stylesheet" href="css/bantuan.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="/css/bantuan.css?v=<?php echo time(); ?>">
 </head>
 <body>
 
