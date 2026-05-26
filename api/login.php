@@ -1,21 +1,24 @@
 <?php
-session_start();
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
+// Jika sudah ada session, langsung lempar ke rute /dashboard Vercel
 if(isset($_SESSION['user_id'])) {
-    header("Location: /dashboard.php");
+    header("Location: /dashboard");
     exit;
 }
 
 $error_message = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Gunakan trim untuk menghapus spasi tidak sengaja yang diketik user
     $username = trim($_POST['username']);
     $password = trim($_POST['password']);
 
-    // Tembak koneksi langsung di sini secara bersih tanpa memanggil file database.php yang tersangkut cache
     try {
         $host = "gateway01.ap-southeast-1.prod.alicloud.tidbcloud.com";      
-        $db_name = "learnify"; // Kunci nama database yang benar di sini
+        $db_name = "learnify"; 
         $username_db = "25qhFyHYwoJyP7o.root";   
         $password_db = "i9dMXmsOdQGUmhkh";
         $port = "4000";                
@@ -30,25 +33,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $db = new PDO($dsn, $username_db, $password_db, $options);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-        // Jalankan Query Login
-        $query = "SELECT * FROM users WHERE (nisn = :username OR email = :username) AND password = :password";
+        // KITA SANGATKAN: Gunakan BINARY untuk memastikan kecocokan teks yang diketik di login
+        $query = "SELECT * FROM users WHERE (BINARY nisn = :username OR BINARY email = :username) AND BINARY password = :password LIMIT 1";
         $stmt = $db->prepare($query);
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':password', $password);
         $stmt->execute();
 
-        if ($stmt->rowCount() == 1) {
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($row) {
+            // Set SESSION secara lengkap
             $_SESSION['user_id'] = $row['id'];
             $_SESSION['nama']    = $row['nama'];
-            header("Location: /dashboard.php");
+            
+            // Simpan session lalu redirect secara absolut menggunakan rute vercel.json
+            session_write_close();
+            header("Location: /dashboard");
             exit;
         } else {
-            $error_message = "NISN/Email atau Kata Sandi salah!";
+            $error_message = "NISN/Email atau Kata Sandi salah! Periksa kembali inputan Anda.";
         }
 
     } catch (PDOException $e) {
-        $error_message = "Gagal memproses data: " . $e->getMessage();
+        $error_message = "Gagal memproses data database: " . $e->getMessage();
     }
 }
 ?>
