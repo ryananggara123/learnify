@@ -10,8 +10,8 @@
     { "src": "/css/(.*)", "dest": "/css/$1" },
     { "src": "/js/(.*)", "dest": "/js/$1" },
     { "src": "/login", "dest": "/api/login.php" },
-    { "src": "/register", "dest": "/api/register.php" },
     { "src": "/dashboard", "dest": "/api/dashboard.php" },
+    { "src": "/register", "dest": "/api/register.php" },
     { "src": "/(.*)", "dest": "/api/$1" }
   ]
 }
