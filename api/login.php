@@ -17,8 +17,6 @@ if ($user && password_verify($password, $user['password'])) {
     // 3. Alihkan ke rute dashboard
     header("Location: /dashboard");
     exit;
-}
-
 } else {
     $error_message = "NISN/Email atau kata sandi salah.";
 }
