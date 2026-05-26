@@ -3,11 +3,20 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// PERBAIKAN: Jika user tidak sengaja membuka halaman login padahal sudah masuk, lempar ke rute bersih
-if(isset($_SESSION['user_id'])) {
-    header("Location: /dashboard");
-    exit;
-}
+// ... bagian setelah verifikasi password sukses ...
+
+// 1. Simpan ke Session asli
+$_SESSION['user_id'] = $user['id'];
+$_SESSION['nama']    = $user['nama'];
+
+// 2. Buat Cookie Backup GLOBAL untuk Vercel (Berlaku 1 hari / 86400 detik)
+// PENTING: Gunakan array parameter atau sertakan path '/' di bagian akhir
+setcookie('user_id', $user['id'], time() + 86400, "/");
+setcookie('nama', $user['nama'], time() + 86400, "/");
+
+// 3. Alihkan ke rute dashboard bersih sesuai vercel.json
+header("Location: /dashboard");
+exit;
 
 $error_message = "";
 
