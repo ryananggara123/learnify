@@ -14,8 +14,7 @@ if(!isset($_SESSION['user_id'])) {
     exit;
 }
 
-// Tambahkan '../' untuk naik satu level keluar dari folder 'api'
-require_once __DIR__ . '/../includes/bank_soal.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/bank_soal.php';
 
 // Fungsi untuk menghitung grade berdasarkan total XP
 function calculateGradeFromXP($totalXp) {

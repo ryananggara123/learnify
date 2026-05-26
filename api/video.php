@@ -16,17 +16,27 @@ if (!isset($_SESSION['user_id']) && isset($_COOKIE['user_id'])) {
 <?php
 require_once 'koneksi.php'; // Pastikan path koneksi.php sudah benar (mungkin perlu '../koneksi.php' jika berada di folder api)
 
-// Debug koneksi
 if (!$koneksi) {
-    die("Koneksi gagal: " . mysqli_connect_error());
+    die("Database tidak terhubung!");
 }
 
+// EKSEKUSI QUERY DENGAN DEBUG
 $sql = "SELECT * FROM videos";
-$result = mysqli_query($koneksi, $sql);
+$query_video = mysqli_query($koneksi, $sql);
 
-if (!$result) {
-    // Ini akan menampilkan alasan kenapa video blank
-    die("Error Query: " . mysqli_error($koneksi));
+// DEBUG: Jika query gagal, tampilkan errornya
+if (!$query_video) {
+    die("Query Error: " . mysqli_error($koneksi));
+}
+
+// DEBUG: Jika data kosong, tampilkan pesan
+if (mysqli_num_rows($query_video) == 0) {
+    die("Tabel 'videos' ditemukan, tetapi datanya kosong (0 baris). Silakan isi database Anda.");
+}
+
+// Jika lolos semua, baru tampilkan video
+while ($row = mysqli_fetch_assoc($query_video)) {
+    // ... tampilkan video Anda ...
 }
 ?>
 
