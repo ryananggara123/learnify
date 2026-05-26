@@ -3,39 +3,50 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Cek apakah session user_id ada, jika tidak ada kembalikan ke halaman utama (index.php)
+// Cek apakah session user_id ada, jika tidak ada tendang ke halaman login
 if(!isset($_SESSION['user_id'])) {
-    header("Location: /index.php"); 
+    header("Location: login.php");
     exit;
 }
 
-// Panggil koneksi PDO TiDB Cloud yang sudah kita buat sebelumnya
-require_once (__DIR__ . '/config/Database.php');
 $id_login = $_SESSION['user_id'];
-
-$database = new Database();
-$db = $database->getConnection();
-
 $xp = 0;
 $streak = 0;
 $user_data = [];
 
-if ($db) {
-    try {
-        // Ambil data user menggunakan PDO yang support TiDB Cloud
-        $query = "SELECT * FROM users WHERE id = :id LIMIT 1";
-        $stmt = $db->prepare($query);
-        $stmt->bindParam(':id', $id_login, PDO::PARAM_INT);
-        $stmt->execute();
-        
-        if ($stmt->rowCount() > 0) {
-            $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
-            $xp = isset($user_data['xp']) ? (int) $user_data['xp'] : 0;
-            $streak = isset($user_data['streak']) ? (int) $user_data['streak'] : 0;
-        }
-    } catch (PDOException $e) {
-        error_log("Gagal mengambil data user: " . $e->getMessage());
+// Gunakan koneksi PDO TiDB Cloud yang stabil dan aman dari cache Vercel
+try {
+    $host = "gateway01.ap-southeast-1.prod.alicloud.tidbcloud.com";      
+    $db_name = "learnify"; 
+    $username_db = "25qhFyHYwoJyP7o.root";   
+    $password_db = "i9dMXmsOdQGUmhkh";
+    $port = "4000";                
+    
+    $dsn = "mysql:host=$host;port=$port;dbname=$db_name";
+    $options = array(
+        PDO::MYSQL_ATTR_SSL_CA => true, 
+        PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+        PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
+    );
+    
+    $db = new PDO($dsn, $username_db, $password_db, $options);
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    // Ambil data user secara real-time dari TiDB Cloud
+    $query = "SELECT * FROM users WHERE id = :id LIMIT 1";
+    $stmt = $db->prepare($query);
+    $stmt->bindParam(':id', $id_login, PDO::PARAM_INT);
+    $stmt->execute();
+    
+    if ($stmt->rowCount() > 0) {
+        $user_data = $stmt->fetch(PDO::FETCH_ASSOC);
+        // Ambil XP dan Streak asli dari database cloud
+        $xp = isset($user_data['xp']) ? (int) $user_data['xp'] : 0;
+        $streak = isset($user_data['streak']) ? (int) $user_data['streak'] : 0;
     }
+} catch (PDOException $e) {
+    // Tulis log jika error agar tidak merusak UI HTML
+    error_log("Gagal mengambil data user dari TiDB: " . $e->getMessage());
 }
 
 // Logika Badge Dinamis: Setiap 200 XP dapat 1 Badge
